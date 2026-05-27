@@ -1,16 +1,57 @@
-# React + Vite
+# Reiki Symbol Practice
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based Reiki symbol tracing and practice application built with Vite.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Practice traditional Reiki symbols
+- Guided tracing mode
+- Symbol reference images
+- Interactive practice screens
+- Local development with React + Vite
+- GitHub version control
 
-## React Compiler
+## Current Symbols
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Cho Ku Rei
+- Sei He Ki
+- Hon Sha Ze Sho Nen
+- Dai Ko Myo
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- Vite
+- JavaScript
+- CSS
+- GitHub
+
+## Future Plans
+
+- Stroke-by-stroke animation
+- Freehand drawing canvas
+- Line smoothing
+- Save practice sessions
+- Mobile PWA support
+- Progress tracking
+- Audio guidance
+- Additional Reiki lineages
+
+## Local Development
+
+Run the project locally:
+
+```bash
+npm install
+npm run dev
+```
+
+Then open:
+
+```text
+http://localhost:5173
+```
+
+## Author
+
+Created by Tiffani Armour.

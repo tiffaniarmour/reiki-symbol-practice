@@ -5,8 +5,9 @@ import seiHeKi from "./assets/sei-he-ki.png";
 import honShaZeShoNen from "./assets/hon-sha-ze-sho-nen.png";
 import daiKoMyo from "./assets/dai-ko-myo.png";
 
-function App() { // updated
+function App() {
   const [selectedSymbol, setSelectedSymbol] = useState(null);
+
   const canvasRef = useRef(null);
   const isDrawing = useRef(false);
 
@@ -37,11 +38,11 @@ function App() { // updated
 
   const practiceWidth = 320;
   const practiceHeight = selectedSymbol?.tall ? 460 : 320;
-  const canvasPadding = 10;
 
   function getPosition(event) {
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
+
     const touch = event.touches?.[0];
 
     return {
@@ -52,10 +53,12 @@ function App() { // updated
 
   function startDrawing(event) {
     event.preventDefault();
+
     isDrawing.current = true;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
+
     const { x, y } = getPosition(event);
 
     ctx.beginPath();
@@ -64,16 +67,18 @@ function App() { // updated
 
   function draw(event) {
     if (!isDrawing.current) return;
+
     event.preventDefault();
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
+
     const { x, y } = getPosition(event);
 
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.strokeStyle = "#0f2e4d";
+    ctx.strokeStyle = "#d72563";
 
     ctx.lineTo(x, y);
     ctx.stroke();
@@ -85,9 +90,11 @@ function App() { // updated
 
   function clearCanvas() {
     const canvas = canvasRef.current;
+
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
@@ -150,7 +157,6 @@ function App() { // updated
             borderRadius: "20px",
             boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
             overflow: "hidden",
-            boxSizing: "border-box",
           }}
         >
           <img
@@ -158,9 +164,9 @@ function App() { // updated
             alt={selectedSymbol.name}
             style={{
               position: "absolute",
-              inset: `${canvasPadding}px`,
-              width: `calc(100% - ${canvasPadding * 2}px)`,
-              height: `calc(100% - ${canvasPadding * 2}px)`,
+              inset: "10px",
+              width: "calc(100% - 20px)",
+              height: "calc(100% - 20px)",
               objectFit: "contain",
               opacity: 0.28,
               pointerEvents: "none",
@@ -278,6 +284,17 @@ function App() { // updated
           </div>
         ))}
       </div>
+
+      <footer
+        style={{
+          textAlign: "center",
+          marginTop: "3rem",
+          opacity: 0.7,
+          fontSize: "0.9rem",
+        }}
+      >
+        Created by Tiffani Armour 2026 
+      </footer>
     </div>
   );
 }

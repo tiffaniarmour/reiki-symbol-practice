@@ -70,10 +70,10 @@ function App() { // updated
     const ctx = canvas.getContext("2d");
     const { x, y } = getPosition(event);
 
-    ctx.lineWidth = 6;
+    ctx.lineWidth = 3;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.strokeStyle = "#3f6f9f";
+    ctx.strokeStyle = "#0f2e4d";
 
     ctx.lineTo(x, y);
     ctx.stroke();

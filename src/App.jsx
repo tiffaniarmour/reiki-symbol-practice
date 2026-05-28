@@ -75,10 +75,10 @@ function App() {
 
     const { x, y } = getPosition(event);
 
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 3;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.strokeStyle = "#d72563";
+    ctx.strokeStyle = "#0f2e4d";
 
     ctx.lineTo(x, y);
     ctx.stroke();

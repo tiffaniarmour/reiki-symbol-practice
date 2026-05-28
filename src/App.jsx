@@ -6,10 +6,10 @@ function App() {
   const isDrawing = useRef(false);
 
   const symbols = [
-    { name: "Cho Ku Rei", meaning: "Power Symbol", image: "/reiki-symbol-practice/symbols/cho-ku-rei.png" },
-    { name: "Sei He Ki", meaning: "Mental / Emotional Healing", image: "/reiki-symbol-practice/symbols/sei-he-ki.png" },
-    { name: "Hon Sha Ze Sho Nen", meaning: "Distance Symbol", image: "/reiki-symbol-practice/symbols/hon-sha-ze-sho-nen.png" },
-    { name: "Dai Ko Myo", meaning: "Master Symbol", image: "/reiki-symbol-practice/symbols/dai-ko-myo.png" }
+    { name: "Cho Ku Rei", meaning: "Power Symbol", image: "symbols/cho-ku-rei.png" },
+    { name: "Sei He Ki", meaning: "Mental / Emotional Healing", image: "symbols/sei-he-ki.png" },
+    { name: "Hon Sha Ze Sho Nen", meaning: "Distance Symbol", image: "symbols/hon-sha-ze-sho-nen.png" },
+    { name: "Dai Ko Myo", meaning: "Master Symbol", image: "symbols/dai-ko-myo.png" }
   ];
 
   function getPosition(event) {

@@ -5,7 +5,7 @@ import seiHeKi from "./assets/sei-he-ki.png";
 import honShaZeShoNen from "./assets/hon-sha-ze-sho-nen.png";
 import daiKoMyo from "./assets/dai-ko-myo.png";
 
-function App() {
+function App() { // updated
   const [selectedSymbol, setSelectedSymbol] = useState(null);
   const canvasRef = useRef(null);
   const isDrawing = useRef(false);

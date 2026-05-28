@@ -11,11 +11,33 @@ function App() {
   const isDrawing = useRef(false);
 
   const symbols = [
-    { name: "Cho Ku Rei", meaning: "Power Symbol", image: choKuRei },
-    { name: "Sei He Ki", meaning: "Mental / Emotional Healing", image: seiHeKi },
-    { name: "Hon Sha Ze Sho Nen", meaning: "Distance Symbol", image: honShaZeShoNen },
-    { name: "Dai Ko Myo", meaning: "Master Symbol", image: daiKoMyo },
+    {
+      name: "Cho Ku Rei",
+      meaning: "Power Symbol",
+      image: choKuRei,
+    },
+    {
+      name: "Sei He Ki",
+      meaning: "Mental / Emotional Healing",
+      image: seiHeKi,
+    },
+    {
+      name: "Hon Sha Ze Sho Nen",
+      meaning: "Distance Symbol",
+      image: honShaZeShoNen,
+      tall: true,
+    },
+    {
+      name: "Dai Ko Myo",
+      meaning: "Master Symbol",
+      image: daiKoMyo,
+      tall: true,
+    },
   ];
+
+  const practiceWidth = 320;
+  const practiceHeight = selectedSymbol?.tall ? 460 : 320;
+  const canvasPadding = 10;
 
   function getPosition(event) {
     const canvas = canvasRef.current;
@@ -50,7 +72,9 @@ function App() {
 
     ctx.lineWidth = 6;
     ctx.lineCap = "round";
+    ctx.lineJoin = "round";
     ctx.strokeStyle = "#3f6f9f";
+
     ctx.lineTo(x, y);
     ctx.stroke();
   }
@@ -61,27 +85,92 @@ function App() {
 
   function clearCanvas() {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
   if (selectedSymbol) {
     return (
-      <div style={{ minHeight: "100vh", backgroundColor: "#f4efe6", padding: "2rem", fontFamily: "sans-serif", color: "#2d2d2d", textAlign: "center" }}>
-        <button onClick={() => setSelectedSymbol(null)} style={{ padding: "0.75rem 1rem", border: "none", borderRadius: "10px", backgroundColor: "#3f6f9f", color: "white", cursor: "pointer", marginBottom: "2rem" }}>
+      <div
+        style={{
+          minHeight: "100vh",
+          backgroundColor: "#f4efe6",
+          padding: "2rem",
+          fontFamily: "sans-serif",
+          color: "#2d2d2d",
+          textAlign: "center",
+          boxSizing: "border-box",
+        }}
+      >
+        <button
+          onClick={() => setSelectedSymbol(null)}
+          style={{
+            padding: "0.75rem 1rem",
+            border: "none",
+            borderRadius: "10px",
+            backgroundColor: "#3f6f9f",
+            color: "white",
+            cursor: "pointer",
+            marginBottom: "2rem",
+            fontSize: "1rem",
+          }}
+        >
           ← Back
         </button>
 
-        <h1>{selectedSymbol.name}</h1>
-        <p style={{ fontSize: "1.2rem", marginBottom: "2rem" }}>{selectedSymbol.meaning}</p>
+        <h1
+          style={{
+            fontSize: "clamp(2.5rem, 10vw, 4rem)",
+            lineHeight: "1",
+            marginBottom: "0.5rem",
+          }}
+        >
+          {selectedSymbol.name}
+        </h1>
 
-        <div style={{ position: "relative", width: "320px", height: "320px", margin: "0 auto", backgroundColor: "white", borderRadius: "20px", boxShadow: "0 2px 8px rgba(0,0,0,0.1)", overflow: "hidden" }}>
-          <img src={selectedSymbol.image} alt={selectedSymbol.name} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain", opacity: 0.25, padding: "1rem" }} />
+        <p
+          style={{
+            fontSize: "1.4rem",
+            marginBottom: "2rem",
+          }}
+        >
+          {selectedSymbol.meaning}
+        </p>
+
+        <div
+          style={{
+            position: "relative",
+            width: `${practiceWidth}px`,
+            height: `${practiceHeight}px`,
+            maxWidth: "90vw",
+            margin: "0 auto",
+            backgroundColor: "white",
+            borderRadius: "20px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            overflow: "hidden",
+            boxSizing: "border-box",
+          }}
+        >
+          <img
+            src={selectedSymbol.image}
+            alt={selectedSymbol.name}
+            style={{
+              position: "absolute",
+              inset: `${canvasPadding}px`,
+              width: `calc(100% - ${canvasPadding * 2}px)`,
+              height: `calc(100% - ${canvasPadding * 2}px)`,
+              objectFit: "contain",
+              opacity: 0.28,
+              pointerEvents: "none",
+            }}
+          />
 
           <canvas
             ref={canvasRef}
-            width="320"
-            height="320"
+            width={practiceWidth}
+            height={practiceHeight}
             onMouseDown={startDrawing}
             onMouseMove={draw}
             onMouseUp={stopDrawing}
@@ -89,11 +178,30 @@ function App() {
             onTouchStart={startDrawing}
             onTouchMove={draw}
             onTouchEnd={stopDrawing}
-            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", touchAction: "none", cursor: "crosshair" }}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              touchAction: "none",
+              cursor: "crosshair",
+            }}
           />
         </div>
 
-        <button onClick={clearCanvas} style={{ marginTop: "1rem", padding: "0.75rem 1rem", borderRadius: "10px", border: "none", backgroundColor: "#d72563", color: "white", cursor: "pointer" }}>
+        <button
+          onClick={clearCanvas}
+          style={{
+            marginTop: "1rem",
+            padding: "0.85rem 1.25rem",
+            borderRadius: "12px",
+            border: "none",
+            backgroundColor: "#d72563",
+            color: "white",
+            cursor: "pointer",
+            fontSize: "1rem",
+          }}
+        >
           Clear Practice
         </button>
       </div>
@@ -101,16 +209,70 @@ function App() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#f4efe6", color: "#2d2d2d", padding: "2rem", fontFamily: "sans-serif" }}>
-      <h1 style={{ textAlign: "center" }}>Reiki Symbol Practice</h1>
-      <p style={{ textAlign: "center" }}>Welcome to your Reiki practice space.</p>
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#f4efe6",
+        color: "#2d2d2d",
+        padding: "2rem",
+        fontFamily: "sans-serif",
+        boxSizing: "border-box",
+      }}
+    >
+      <h1
+        style={{
+          textAlign: "center",
+          fontSize: "clamp(2.5rem, 8vw, 4rem)",
+          lineHeight: "1",
+          marginBottom: "1rem",
+        }}
+      >
+        Reiki Symbol Practice
+      </h1>
 
-      <div style={{ display: "grid", gap: "1rem", maxWidth: "500px", margin: "2rem auto" }}>
+      <p
+        style={{
+          textAlign: "center",
+          fontSize: "1.2rem",
+        }}
+      >
+        Welcome to your Reiki practice space.
+      </p>
+
+      <div
+        style={{
+          display: "grid",
+          gap: "1rem",
+          maxWidth: "500px",
+          margin: "2rem auto",
+        }}
+      >
         {symbols.map((symbol) => (
-          <div key={symbol.name} style={{ backgroundColor: "white", padding: "1rem", borderRadius: "16px", boxShadow: "0 2px 8px rgba(0,0,0,0.1)", textAlign: "center" }}>
+          <div
+            key={symbol.name}
+            style={{
+              backgroundColor: "white",
+              padding: "1rem",
+              borderRadius: "16px",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+              textAlign: "center",
+            }}
+          >
             <h2>{symbol.name}</h2>
+
             <p>{symbol.meaning}</p>
-            <button onClick={() => setSelectedSymbol(symbol)} style={{ padding: "0.75rem", borderRadius: "10px", border: "none", backgroundColor: "#3f6f9f", color: "white", cursor: "pointer" }}>
+
+            <button
+              onClick={() => setSelectedSymbol(symbol)}
+              style={{
+                padding: "0.75rem",
+                borderRadius: "10px",
+                border: "none",
+                backgroundColor: "#3f6f9f",
+                color: "white",
+                cursor: "pointer",
+              }}
+            >
               Practice Symbol
             </button>
           </div>

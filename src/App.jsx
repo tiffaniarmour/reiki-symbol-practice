@@ -7,6 +7,7 @@ import daiKoMyo from "./assets/dai-ko-myo.png";
 
 function App() {
   const [selectedSymbol, setSelectedSymbol] = useState(null);
+  const [practiceMode, setPracticeMode] = useState(null);
 
   const canvasRef = useRef(null);
   const isDrawing = useRef(false);
@@ -39,10 +40,12 @@ function App() {
   const practiceWidth = 320;
   const practiceHeight = selectedSymbol?.tall ? 460 : 320;
 
+  const penWidth = 4;
+  const penColor = "#3f6f9f";
+
   function getPosition(event) {
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
-
     const touch = event.touches?.[0];
 
     return {
@@ -53,12 +56,10 @@ function App() {
 
   function startDrawing(event) {
     event.preventDefault();
-
     isDrawing.current = true;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-
     const { x, y } = getPosition(event);
 
     ctx.beginPath();
@@ -72,13 +73,12 @@ function App() {
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-
     const { x, y } = getPosition(event);
 
-    ctx.lineWidth = 3;
+    ctx.lineWidth = penWidth;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.strokeStyle = "#0f2e4d";
+    ctx.strokeStyle = penColor;
 
     ctx.lineTo(x, y);
     ctx.stroke();
@@ -90,15 +90,22 @@ function App() {
 
   function clearCanvas() {
     const canvas = canvasRef.current;
-
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
-
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
-  if (selectedSymbol) {
+  function goHome() {
+    setSelectedSymbol(null);
+    setPracticeMode(null);
+  }
+
+  function goBackToModeChoice() {
+    setPracticeMode(null);
+  }
+
+  if (selectedSymbol && !practiceMode) {
     return (
       <div
         style={{
@@ -112,7 +119,7 @@ function App() {
         }}
       >
         <button
-          onClick={() => setSelectedSymbol(null)}
+          onClick={goHome}
           style={{
             padding: "0.75rem 1rem",
             border: "none",
@@ -127,23 +134,180 @@ function App() {
           ← Back
         </button>
 
-        <h1
-          style={{
-            fontSize: "clamp(2.5rem, 10vw, 4rem)",
-            lineHeight: "1",
-            marginBottom: "0.5rem",
-          }}
-        >
-          {selectedSymbol.name}
-        </h1>
+        <h1>{selectedSymbol.name}</h1>
 
         <p
           style={{
-            fontSize: "1.4rem",
+            fontSize: "1.2rem",
             marginBottom: "2rem",
           }}
         >
           {selectedSymbol.meaning}
+        </p>
+
+        <h2>Choose Practice Mode</h2>
+
+        <div
+          style={{
+            display: "grid",
+            gap: "1rem",
+            maxWidth: "420px",
+            margin: "2rem auto",
+          }}
+        >
+          <button
+            onClick={() => setPracticeMode("freehand")}
+            style={{
+              padding: "1rem",
+              borderRadius: "16px",
+              border: "none",
+              backgroundColor: "#3f6f9f",
+              color: "white",
+              cursor: "pointer",
+              fontSize: "1.1rem",
+            }}
+          >
+            Freehand Tracing
+          </button>
+
+          <button
+            onClick={() => setPracticeMode("guided")}
+            style={{
+              padding: "1rem",
+              borderRadius: "16px",
+              border: "none",
+              backgroundColor: "#d72563",
+              color: "white",
+              cursor: "pointer",
+              fontSize: "1.1rem",
+            }}
+          >
+            Guided Tracing
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (selectedSymbol && practiceMode === "guided") {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          backgroundColor: "#f4efe6",
+          padding: "2rem",
+          fontFamily: "sans-serif",
+          color: "#2d2d2d",
+          textAlign: "center",
+          boxSizing: "border-box",
+        }}
+      >
+        <button
+          onClick={goBackToModeChoice}
+          style={{
+            padding: "0.75rem 1rem",
+            border: "none",
+            borderRadius: "10px",
+            backgroundColor: "#3f6f9f",
+            color: "white",
+            cursor: "pointer",
+            marginBottom: "2rem",
+            fontSize: "1rem",
+          }}
+        >
+          ← Back to Modes
+        </button>
+
+        <h1>{selectedSymbol.name}</h1>
+
+        <p
+          style={{
+            fontSize: "1.2rem",
+            marginBottom: "2rem",
+          }}
+        >
+          Guided Tracing Mode
+        </p>
+
+        <div
+          style={{
+            width: `${practiceWidth}px`,
+            height: `${practiceHeight}px`,
+            maxWidth: "90vw",
+            margin: "0 auto",
+            backgroundColor: "white",
+            borderRadius: "20px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "1rem",
+            boxSizing: "border-box",
+          }}
+        >
+          <img
+            src={selectedSymbol.image}
+            alt={selectedSymbol.name}
+            style={{
+              maxWidth: "100%",
+              maxHeight: "100%",
+              objectFit: "contain",
+              opacity: 0.4,
+            }}
+          />
+        </div>
+
+        <p
+          style={{
+            marginTop: "1.5rem",
+            fontSize: "1rem",
+            opacity: 0.8,
+          }}
+        >
+          Guided tracing steps will be added here next.
+        </p>
+      </div>
+    );
+  }
+
+  if (selectedSymbol && practiceMode === "freehand") {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          backgroundColor: "#f4efe6",
+          padding: "2rem",
+          fontFamily: "sans-serif",
+          color: "#2d2d2d",
+          textAlign: "center",
+          boxSizing: "border-box",
+        }}
+      >
+        <button
+          onClick={goBackToModeChoice}
+          style={{
+            padding: "0.75rem 1rem",
+            border: "none",
+            borderRadius: "10px",
+            backgroundColor: "#3f6f9f",
+            color: "white",
+            cursor: "pointer",
+            marginBottom: "2rem",
+            fontSize: "1rem",
+          }}
+        >
+          ← Back to Modes
+        </button>
+
+        <h1>{selectedSymbol.name}</h1>
+
+        <p
+          style={{
+            fontSize: "1.2rem",
+            marginBottom: "2rem",
+          }}
+        >
+          Freehand Tracing
         </p>
 
         <div
@@ -269,7 +433,10 @@ function App() {
             <p>{symbol.meaning}</p>
 
             <button
-              onClick={() => setSelectedSymbol(symbol)}
+              onClick={() => {
+                setSelectedSymbol(symbol);
+                setPracticeMode(null);
+              }}
               style={{
                 padding: "0.75rem",
                 borderRadius: "10px",
@@ -293,7 +460,7 @@ function App() {
           fontSize: "0.9rem",
         }}
       >
-        Created by Tiffani Armour 2026 
+        Created by Tiffani Armour
       </footer>
     </div>
   );

@@ -170,20 +170,36 @@ function App() {
             Freehand Tracing
           </button>
 
-          <button
-            onClick={() => setPracticeMode("guided")}
-            style={{
-              padding: "1rem",
-              borderRadius: "16px",
-              border: "none",
-              backgroundColor: "#d72563",
-              color: "white",
-              cursor: "pointer",
-              fontSize: "1.1rem",
-            }}
-          >
-            Guided Tracing
-          </button>
+          <div>
+            <button
+              disabled
+              style={{
+                width: "100%",
+                padding: "1rem",
+                borderRadius: "16px",
+                border: "none",
+                backgroundColor: "#d72563",
+                color: "white",
+                cursor: "not-allowed",
+                fontSize: "1.1rem",
+                opacity: 0.5,
+              }}
+            >
+              Guided Tracing
+            </button>
+
+            <p
+              style={{
+                marginTop: "0.5rem",
+                marginBottom: 0,
+                fontSize: "0.9rem",
+                color: "#6b5f57",
+                fontStyle: "italic",
+              }}
+            >
+              Coming Soon
+            </p>
+          </div>
         </div>
       </div>
     );
